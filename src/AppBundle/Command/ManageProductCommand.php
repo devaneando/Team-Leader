@@ -6,7 +6,6 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
 use AppBundle\Exception\InvalidOptionException;
 use AppBundle\Exception\InvalidProductCodeException;
-use AppBundle\Exception\InvalidProductPriceException;
 use AppBundle\Exception\UnexistentCategoryException;
 use AppBundle\Exception\UnexistentProductException;
 use AppBundle\Traits\CategoryRepositoryTrait;
@@ -81,22 +80,10 @@ class ManageProductCommand extends ContainerAwareCommand
                 'The code of the product.'
             )
             ->addOption(
-                'price',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'The price of the product.'
-            )
-            ->addOption(
                 'change-name-to',
                 null,
                 InputOption::VALUE_REQUIRED,
                 'Change the name of a product.'
-            )
-            ->addOption(
-                'change-price-to',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'Change the price of a product.'
             )
             ->addOption(
                 'add-category-to',
@@ -120,7 +107,6 @@ class ManageProductCommand extends ContainerAwareCommand
             !$input->getOption('disable') &&
             !$input->getOption('list-products') &&
             !$input->getOption('change-name-to') &&
-            !$input->getOption('change-price-to') &&
             !$input->getOption('add-category-to') &&
             !$input->getOption('remove-category-from') &&
             !$input->getOption('list-categories')) {
@@ -142,7 +128,6 @@ class ManageProductCommand extends ContainerAwareCommand
         $this->disableAction($input, $output);
         $this->enableAction($input, $output);
         $this->changeNameAction($input, $output);
-        $this->changePriceAction($input, $output);
         $this->removeCategoryAction($input, $output);
         $this->addCategoryAction($input, $output);
     }
@@ -193,21 +178,19 @@ class ManageProductCommand extends ContainerAwareCommand
 
             $output->writeln(
                 sprintf(
-                    '<comment>%-15s|%-10s|%-15s|%-10s|%s</comment>',
+                    '<comment>%-15s|%-10s|%-15s|%s</comment>',
                     'Id',
                     'Enabled',
                     'Code',
-                    'Price',
                     'Product'
                 )
             );
             $output->writeln(
                 sprintf(
-                    '<info>%-15s|%-10s|%-15s|%-10s|%s</info>',
+                    '<info>%-15s|%-10s|%-15s|%s</info>',
                     $product->getId(),
                     $product->getEnabled(),
                     $product->getCode(),
-                    $product->getPrice(),
                     $product->getName()
                 )
             );
@@ -268,10 +251,9 @@ class ManageProductCommand extends ContainerAwareCommand
         $name = trim($input->getOption('create-with-name'));
 
         if (!$input->getOption('category-id') ||
-        !$input->getOption('code') ||
-        !$input->getOption('price')) {
+        !$input->getOption('code')) {
             throw new InvalidOptionException(
-                "I can't create a new product without a 'category', a 'code' and a 'price'. "
+                "I can't create a new product without a 'category' and a 'code'. "
                 .'At least one of the is missing.'
             );
         }
@@ -279,11 +261,6 @@ class ManageProductCommand extends ContainerAwareCommand
         $category = $this->getCategoryRepository()->findOneBy(['id' => $input->getOption('category-id')]);
         if (!$category) {
             throw new UnexistentCategoryException();
-        }
-
-        $price = $input->getOption('price');
-        if (!is_numeric($price)) {
-            throw new InvalidProductPriceException();
         }
 
         $code = strtoupper(trim($input->getOption('code')));
@@ -303,8 +280,7 @@ class ManageProductCommand extends ContainerAwareCommand
                 ->addCategory($category)
                 ->setCode($code)
                 ->setEnabled($enabled)
-                ->setName($name)
-                ->setPrice($price);
+                ->setName($name);
             $this->getEntityManager()->persist($product);
             $this->getEntityManager()->flush();
             $output->writeln('<info>The product was successfully created.</info>');
@@ -416,48 +392,6 @@ class ManageProductCommand extends ContainerAwareCommand
         $product->setName($name);
         $this->getEntityManager()->flush();
         $output->writeln('<info>The product name was changed.</info>');
-
-        return false;
-    }
-
-    // change-price-to
-
-    /**
-     * Change the name of a product.
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @throws UnexistentProductException
-     *
-     * @return bool True if the command should stop processing, false if it should continue
-     */
-    private function changePriceAction(InputInterface $input, OutputInterface $output)
-    {
-        if (!$input->getOption('change-price-to')) {
-            return false;
-        }
-        $price = trim($input->getOption('change-price-to'));
-        if (!is_numeric($price)) {
-            throw new InvalidProductPriceException();
-        }
-
-        if (!$input->getOption('product-id')) {
-            $output->writeln("<error>Can't enable a product without its id.</error>");
-
-            return false;
-        }
-
-        $id = $input->getOption('product-id');
-        /** @var Product $product */
-        $product = $this->getProductRepository()->findOneBy(['id' => $id]);
-
-        if (!$product) {
-            throw new UnexistentProductException();
-        }
-        $product->setPrice($price);
-        $this->getEntityManager()->flush();
-        $output->writeln('<info>The product price was changed.</info>');
 
         return false;
     }

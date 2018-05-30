@@ -38,13 +38,6 @@ class Product
     private $code;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="price", type="float")
-     */
-    private $price;
-
-    /**
      * @var ArrayCollection|Category[]
      *
      * @ORM\ManyToMany(targetEntity="Category", mappedBy="products")
@@ -119,30 +112,6 @@ class Product
     public function getCode()
     {
         return $this->code;
-    }
-
-    /**
-     * Set price.
-     *
-     * @param float $price
-     *
-     * @return Product
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price.
-     *
-     * @return float
-     */
-    public function getPrice()
-    {
-        return $this->price;
     }
 
     /**
