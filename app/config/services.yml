@@ -4,6 +4,7 @@ parameters:
     app.repositoy.category.class: AppBundle\Entity\Repository\CategoryRepository
     app.repositoy.product.class: AppBundle\Entity\Repository\ProductRepository
     app.command.manage_category.class: AppBundle\Command\ManageCategoryCommand
+    app.command.manage_product.class: AppBundle\Command\ManageProductCommand
 
 services:
     _defaults:
@@ -37,6 +38,16 @@ services:
         public: true
         calls:
             - [setCategoryRepository, ['@app.repositoy.category']]
+            - [setEntityManager, ['@doctrine.orm.entity_manager']]
+        tags:
+            - { name: 'console.command' }
+
+    app.command.manage_product:
+        class: '%app.command.manage_product.class%'
+        public: true
+        calls:
+            - [setCategoryRepository, ['@app.repositoy.category']]
+            - [setProductRepository, ['@app.repositoy.product']]
             - [setEntityManager, ['@doctrine.orm.entity_manager']]
         tags:
             - { name: 'console.command' }
