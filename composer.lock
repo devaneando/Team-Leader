@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c027df984a8b0216a56a88bffcb47ef9",
+    "content-hash": "f6876a1b05ea3ac4c51b62cb9ede51f1",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2674,16 +2674,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.4.11",
+            "version": "v3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "63cdae00a75862fa543b765ba63d55f6b6397d0c"
+                "reference": "292c1a79c5c32360c62bbe67022a38c6535094d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/63cdae00a75862fa543b765ba63d55f6b6397d0c",
-                "reference": "63cdae00a75862fa543b765ba63d55f6b6397d0c",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/292c1a79c5c32360c62bbe67022a38c6535094d5",
+                "reference": "292c1a79c5c32360c62bbe67022a38c6535094d5",
                 "shasum": ""
             },
             "require": {
@@ -2703,10 +2703,6 @@
             "extra": {
                 "branch-alias": {
                     "dev-master": "3.4-dev"
-                },
-                "thanks": {
-                    "name": "phpunit/phpunit",
-                    "url": "https://github.com/sebastianbergmann/phpunit"
                 }
             },
             "autoload": {
@@ -2736,7 +2732,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2018-05-16T12:49:49+00:00"
+            "time": "2017-11-22T11:41:29+00:00"
         }
     ],
     "aliases": [],

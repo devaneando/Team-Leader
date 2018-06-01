@@ -1,10 +1,11 @@
 # Learn more about services, parameters and containers at
 # https://symfony.com/doc/current/service_container.html
 parameters:
-    app.repositoy.category.class: AppBundle\Entity\Repository\CategoryRepository
-    app.repositoy.product.class: AppBundle\Entity\Repository\ProductRepository
+    app.repository.category.class: AppBundle\Entity\Repository\CategoryRepository
+    app.repository.product.class: AppBundle\Entity\Repository\ProductRepository
     app.command.manage_category.class: AppBundle\Command\ManageCategoryCommand
     app.command.manage_product.class: AppBundle\Command\ManageProductCommand
+    app.service.OrderService.class: AppBundle\Service\OrderService
 
 services:
     _defaults:
@@ -15,16 +16,16 @@ services:
 
     ##### Doctrine entity repositories
 
-    app.repositoy.category:
-        class: '%app.repositoy.category.class%'
+    app.repository.category:
+        class: '%app.repository.category.class%'
         public: true
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments: [ AppBundle\Entity\Category ]
         tags:
             - { name: 'doctrine.repository_service' }
 
-    app.repositoy.product:
-        class: '%app.repositoy.product.class%'
+    app.repository.product:
+        class: '%app.repository.product.class%'
         public: true
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments: [ AppBundle\Entity\Product ]
@@ -37,7 +38,7 @@ services:
         class: '%app.command.manage_category.class%'
         public: true
         calls:
-            - [setCategoryRepository, ['@app.repositoy.category']]
+            - [setCategoryRepository, ['@app.repository.category']]
             - [setEntityManager, ['@doctrine.orm.entity_manager']]
         tags:
             - { name: 'console.command' }
@@ -46,8 +47,16 @@ services:
         class: '%app.command.manage_product.class%'
         public: true
         calls:
-            - [setCategoryRepository, ['@app.repositoy.category']]
-            - [setProductRepository, ['@app.repositoy.product']]
+            - [setCategoryRepository, ['@app.repository.category']]
+            - [setProductRepository, ['@app.repository.product']]
             - [setEntityManager, ['@doctrine.orm.entity_manager']]
         tags:
             - { name: 'console.command' }
+
+    ##### Services
+
+    app.service.OrderService:
+        class: '%app.service.OrderService.class%'
+        public: true
+        calls:
+            - [setProductRepository, ['@app.repository.product']]

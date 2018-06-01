@@ -43,6 +43,11 @@ class OrderItem
     private $offer;
 
     /**
+     * @var array $categoryIds The ids of the categories the orderItem belongs to
+     */
+    private $categoryIds;
+
+    /**
      * @var int $quantity A calculated field with the result 'rawQuantity' + 'offer'
      */
     private $quantity;
@@ -223,6 +228,30 @@ class OrderItem
     public function setOffer(int $offer)
     {
         $this->offer = $offer;
+
+        return $this;
+    }
+
+    /**
+     * Get $categoryIds The ids of the categories the orderItem belongs to.
+     *
+     * @return array
+     */
+    public function getCategoryIds()
+    {
+        return $this->categoryIds;
+    }
+
+    /**
+     * Set $categoryIds The ids of the categories the orderItem belongs to.
+     *
+     * @param array $categoryIds  $categoryIds The ids of the categories the orderItem belongs to
+     *
+     * @return self
+     */
+    public function setCategoryIds(array $categoryIds)
+    {
+        $this->categoryIds = $categoryIds;
 
         return $this;
     }
