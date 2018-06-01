@@ -2,6 +2,7 @@
 
 namespace AppBundle\Model;
 
+use AppBundle\Exception\Command\InvalidParameterException;
 use AppBundle\Model\OrderItem;
 use Doctrine\Common\Collections\ArrayCollection;
 

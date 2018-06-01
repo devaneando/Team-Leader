@@ -4,10 +4,10 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
-use AppBundle\Exception\InvalidOptionException;
-use AppBundle\Exception\InvalidProductCodeException;
-use AppBundle\Exception\UnexistentCategoryException;
-use AppBundle\Exception\UnexistentProductException;
+use AppBundle\Exception\Command\InvalidOptionException;
+use AppBundle\Exception\Model\InvalidProductCodeException;
+use AppBundle\Exception\Model\UnexistentCategoryException;
+use AppBundle\Exception\Model\UnexistentProductException;
 use AppBundle\Traits\CategoryRepositoryTrait;
 use AppBundle\Traits\EntityManagerTrait;
 use AppBundle\Traits\ProductRepositoryTrait;

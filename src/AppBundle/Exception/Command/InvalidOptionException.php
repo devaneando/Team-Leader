@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Exception;
+namespace AppBundle\Exception\Command;
 
 use \Exception;
 

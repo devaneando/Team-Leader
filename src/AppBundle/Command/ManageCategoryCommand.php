@@ -2,10 +2,10 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Exception\Command\InvalidOptionException;
 use AppBundle\Entity\Category;
-use AppBundle\Exception\InvalidOptionException;
-use AppBundle\Exception\InvalidProductCodeException;
-use AppBundle\Exception\UnexistentCategoryException;
+use AppBundle\Exception\Model\InvalidProductCodeException;
+use AppBundle\Exception\Model\UnexistentCategoryException;
 use AppBundle\Traits\CategoryRepositoryTrait;
 use AppBundle\Traits\EntityManagerTrait;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
