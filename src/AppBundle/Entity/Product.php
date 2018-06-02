@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\OrderPromotion;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,9 +41,14 @@ class Product
     /**
      * @var ArrayCollection|Category[]
      *
-     * @ORM\ManyToMany(targetEntity="Category", mappedBy="products")
+     * @ORM\ManyToMany(targetEntity="Category", mappedBy="products", cascade={"persist"})
      */
     protected $categories;
+
+    /**
+     * @ORM\OneToMany(targetEntity="OrderPromotion", mappedBy="freebieItem", cascade={"persist"})
+     */
+    private $promotions;
 
     /**
      * @var bool
@@ -54,6 +60,7 @@ class Product
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->promotions = new ArrayCollection();
     }
 
     /**
@@ -175,11 +182,67 @@ class Product
     }
 
     /**
+     * Get the value of promotions.
+     */
+    public function getPromotions()
+    {
+        return $this->promotions;
+    }
+
+    /**
+     * Set the value of promotions.
+     *
+     * @param mixed $promotions
+     *
+     * @return self
+     */
+    public function setPromotions($promotions)
+    {
+        $this->promotions = $promotions;
+
+        return $this;
+    }
+
+    /**
+     * Add a promotion to the promotions collection.
+     *
+     * @param OrderPromotion $promotion
+     *
+     * @return self
+     */
+    public function addPromotion(OrderPromotion $promotion)
+    {
+        if ($this->promotions->contains($promotion)) {
+            return $this;
+        }
+        $this->promotions->add($promotion);
+
+        return $this;
+    }
+
+    /**
+     * Remove a promotion from the promotions collection.
+     *
+     * @param OrderPromotion $promotion
+     *
+     * @return self
+     */
+    public function removePromotion(OrderPromotion $promotion)
+    {
+        if (!$this->promotions->contains($promotion)) {
+            return $this;
+        }
+        $this->promotions->removeElement($promotion);
+
+        return $this;
+    }
+
+    /**
      * Set enabled.
      *
      * @param bool $enabled
      *
-     * @return Product
+     * @return self
      */
     public function setEnabled($enabled)
     {

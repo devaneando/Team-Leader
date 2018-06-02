@@ -3,9 +3,11 @@
 parameters:
     app.repository.category.class: AppBundle\Entity\Repository\CategoryRepository
     app.repository.product.class: AppBundle\Entity\Repository\ProductRepository
+    app.repository.order_promotion.class: AppBundle\Entity\Repository\OrderPromotionRepository
     app.command.manage_category.class: AppBundle\Command\ManageCategoryCommand
     app.command.manage_product.class: AppBundle\Command\ManageProductCommand
     app.service.OrderService.class: AppBundle\Service\OrderService
+    app.fixture.load.class: AppBundle\DataFixtures\LoadFixtures
 
 services:
     _defaults:
@@ -29,6 +31,14 @@ services:
         public: true
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments: [ AppBundle\Entity\Product ]
+        tags:
+            - { name: 'doctrine.repository_service' }
+
+    app.repository.order_promotion:
+        class: '%app.repository.order_promotion.class%'
+        public: true
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments: [ AppBundle\Entity\OrderPromotion ]
         tags:
             - { name: 'doctrine.repository_service' }
 
@@ -60,3 +70,11 @@ services:
         public: true
         calls:
             - [setProductRepository, ['@app.repository.product']]
+
+    ##### Fixtures
+
+    app.fixture.load:
+        class: '%app.fixture.load.class%'
+        public: true
+        tags:
+            - { name: 'doctrine.fixture.orm' }

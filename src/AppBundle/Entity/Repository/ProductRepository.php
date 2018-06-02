@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Repository;
 
+use AppBundle\Entity\Product;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -18,6 +19,9 @@ class ProductRepository extends EntityRepository
      */
     public function findOneByCode(string $code)
     {
-        return $this->findOneBy(['code' => $code]);
+        /** @var Product $product */
+        $product = $this->findOneBy(['code' => $code]);
+
+        return $product;
     }
 }

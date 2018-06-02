@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Repository;
 
+use AppBundle\Entity\Category;
 use Doctrine\ORM\EntityRepository;
 
 /**

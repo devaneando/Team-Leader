@@ -33,7 +33,7 @@ class Category
     /**
      * @var ArrayCollection|Product[]
      *
-     * @ORM\ManyToMany(targetEntity="Product", inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity="Product", inversedBy="categories", cascade={"persist"})
      * @ORM\JoinTable(
      *     name="categories_products",
      *     joinColumns={
