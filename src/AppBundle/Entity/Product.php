@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\OrderPromotion;
+use AppBundle\Entity\Product;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 

@@ -1,13 +1,15 @@
 # Learn more about services, parameters and containers at
 # https://symfony.com/doc/current/service_container.html
 parameters:
-    app.repository.category.class: AppBundle\Entity\Repository\CategoryRepository
-    app.repository.product.class: AppBundle\Entity\Repository\ProductRepository
-    app.repository.order_promotion.class: AppBundle\Entity\Repository\OrderPromotionRepository
     app.command.manage_category.class: AppBundle\Command\ManageCategoryCommand
+    app.command.manage_order_promotion.class: AppBundle\Command\ManageOrderPromotionCommand
     app.command.manage_product.class: AppBundle\Command\ManageProductCommand
-    app.service.OrderService.class: AppBundle\Service\OrderService
     app.fixture.load.class: AppBundle\DataFixtures\LoadFixtures
+    app.repository.category.class: AppBundle\Entity\Repository\CategoryRepository
+    app.repository.order_promotion.class: AppBundle\Entity\Repository\OrderPromotionRepository
+    app.repository.product.class: AppBundle\Entity\Repository\ProductRepository
+    app.service.order_service.class: AppBundle\Service\OrderService
+    app.service.managers_command.class: AppBundle\Service\ManagersCommandService
 
 services:
     _defaults:
@@ -63,13 +65,33 @@ services:
         tags:
             - { name: 'console.command' }
 
+    app.command.manage_order_promotion:
+        class: '%app.command.manage_order_promotion.class%'
+        public: true
+        calls:
+            - [setCategoryRepository, ['@app.repository.category']]
+            - [setProductRepository, ['@app.repository.product']]
+            - [setManagersCommandService, ['@app.service.managers_command']]
+            - [setOrderPromotionRepository, ['@app.repository.order_promotion']]
+            - [setEntityManager, ['@doctrine.orm.entity_manager']]
+        tags:
+            - { name: 'console.command' }
+
     ##### Services
 
-    app.service.OrderService:
-        class: '%app.service.OrderService.class%'
+    app.service.order_service:
+        class: '%app.service.order_service.class%'
         public: true
         calls:
             - [setProductRepository, ['@app.repository.product']]
+
+    app.service.managers_command:
+        class: '%app.service.managers_command.class%'
+        public: true
+        calls:
+            - [setCategoryRepository, ['@app.repository.category']]
+            - [setProductRepository, ['@app.repository.product']]
+            - [setOrderPromotionRepository, ['@app.repository.order_promotion']]
 
     ##### Fixtures
 

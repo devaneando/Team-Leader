@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\OrderPromotion;
 use AppBundle\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -26,10 +27,6 @@ class LoadFixtures extends Fixture
         $punyHero
             ->setEnabled(true)
             ->setName('Puny Hero');
-
-//         A customer who has already bought for over € 1000, gets a discount of 10% on the whole order.
-        // For every product of category "Switches" (id 2), when you buy five, you get a sixth for free.
-        // If you buy two or more products of category "Tools" (id 1), you get a 20% discount on the cheapest product.
 
         $products = [
             'Magical Hammer',
@@ -63,6 +60,19 @@ class LoadFixtures extends Fixture
             $product->addCategory($category);
             $manager->persist($product);
         }
+
+        // A customer who has already bought for over € 1000, gets a discount of 10% on the whole order.
+        // For every product of category "Switches" (id 2), when you buy five, you get a sixth for free.
+        // If you buy two or more products of category "Tools" (id 1), you get a 20% discount on the cheapest product
+
+        $orderPromotion = new OrderPromotion();
+        $orderPromotion
+            ->setCode('AAA001')
+            ->setDescription('Buy 1000€ get 10%')
+            ->setDiscount(10)
+            ->setEnabled(true)
+            ->setMinimumAmount(1000);
+        $manager->persist($orderPromotion);
 
         $manager->flush();
     }
