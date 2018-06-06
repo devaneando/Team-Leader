@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\CategoryFreebiePromotion;
+use AppBundle\Entity\CheapestDiscountPromotion;
 use AppBundle\Entity\Product;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -55,6 +56,13 @@ class Category
     private $categoryFreebiePromotions;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="CheapestDiscountPromotion", mappedBy="category")
+     */
+    private $cheapestDiscountPromotions;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean")
@@ -65,6 +73,7 @@ class Category
     {
         $this->products = new ArrayCollection();
         $this->categoryFreebiePromotions = new ArrayCollection();
+        $this->cheapestDiscountPromotions = new ArrayCollection();
     }
 
     /**
@@ -215,6 +224,64 @@ class Category
             return $this;
         }
         $this->categoryFreebiePromotions->removeElement($ategoryFreebiePromotion);
+
+        return $this;
+    }
+
+    /**
+     * Get the value of cheapestDiscountPromotions.
+     *
+     * @return ArrayCollection
+     */
+    public function getCheapestDiscountPromotions()
+    {
+        return $this->cheapestDiscountPromotions;
+    }
+
+    /**
+     * Set the value of cheapestDiscountPromotions.
+     *
+     * @param ArrayCollection $cheapestDiscountPromotions
+     *
+     * @return self
+     */
+    public function setCheapestDiscountPromotions(ArrayCollection $cheapestDiscountPromotions)
+    {
+        $this->cheapestDiscountPromotions = $cheapestDiscountPromotions;
+
+        return $this;
+    }
+
+    /**
+     * Add a CheapestDiscountPromotion to the CheapestDiscountPromotions collection.
+     *
+     * @param CheapestDiscountPromotion $cheapestDiscountPromotion
+     *
+     * @return self
+     */
+    public function addCheapestDiscountPromotion(CheapestDiscountPromotion $cheapestDiscountPromotion)
+    {
+        if ($this->cheapestDiscountPromotions->contains($cheapestDiscountPromotion)) {
+            return $this;
+        }
+        $this->cheapestDiscountPromotions->add($cheapestDiscountPromotion);
+
+        return $this;
+    }
+
+    /**
+     * Remove a CheapestDiscountPromotion from the CheapestDiscountPromotions collection.
+     *
+     * @param CheapestDiscountPromotion $cheapestDiscountPromotion
+     *
+     * @return self
+     */
+    public function removeCheapestDiscountPromotion(CheapestDiscountPromotion $cheapestDiscountPromotion)
+    {
+        if (!$this->cheapestDiscountPromotions->contains($cheapestDiscountPromotion)) {
+            return $this;
+        }
+        $this->cheapestDiscountPromotions->removeElement($cheapestDiscountPromotion);
 
         return $this;
     }

@@ -4,6 +4,7 @@ namespace AppBundle\DataFixtures;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\CategoryFreebiePromotion;
+use AppBundle\Entity\CheapestDiscountPromotion;
 use AppBundle\Entity\OrderPromotion;
 use AppBundle\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -95,6 +96,16 @@ class LoadFixtures extends Fixture
             ->setEnabled(true)
             ->setMinimumQuantity(5);
         $manager->persist($categoryFreebiePromotion);
+
+        $cheapestDiscountPromotion = new CheapestDiscountPromotion();
+        $cheapestDiscountPromotion
+            ->setCategory($tools)
+            ->setCode('UUU001')
+            ->setDescription('Buy 2 tools get 20% in the cheapes product.')
+            ->setDiscount(20)
+            ->setEnabled(true)
+            ->setMinimumQuantity(2);
+        $manager->persist($cheapestDiscountPromotion);
 
         $manager->flush();
     }

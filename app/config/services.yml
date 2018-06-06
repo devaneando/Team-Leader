@@ -13,6 +13,7 @@ parameters:
     app.repository.product.class: AppBundle\Entity\Repository\ProductRepository
     app.service.managers_command.class: AppBundle\Service\ManagersCommandService
     app.service.order_service.class: AppBundle\Service\OrderService
+    app.repository.cheapest_discount_promotion.class: AppBundle\Entity\Repository\CheapestDiscountPromotionRepository
 
 services:
     _defaults:
@@ -52,6 +53,14 @@ services:
         public: true
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments: [ AppBundle\Entity\CategoryFreebiePromotion ]
+        tags:
+            - { name: 'doctrine.repository_service' }
+
+    app.repository.cheapest_discount_promotion:
+        class: '%app.repository.cheapest_discount_promotion.class%'
+        public: true
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments: [ AppBundle\Entity\CheapestDiscountPromotion ]
         tags:
             - { name: 'doctrine.repository_service' }
 
