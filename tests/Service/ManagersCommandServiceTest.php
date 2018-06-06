@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace Tests\AppBundle\Service;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\OrderPromotion;

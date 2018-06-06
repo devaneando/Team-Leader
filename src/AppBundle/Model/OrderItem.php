@@ -203,7 +203,10 @@ class OrderItem
      */
     public function setTotal()
     {
-        $this->total = $this->rawTotal * (($this->discount / 100) + 1);
+        $this->total = $this->rawTotal;
+        if ($this->discount > 0) {
+            $this->total = $this->rawTotal * (1 - ($this->discount / 100));
+        }
 
         return $this;
     }
@@ -269,13 +272,11 @@ class OrderItem
     /**
      * Set $quantity A calculated field with the result 'rawQuantity' + 'offer'.
      *
-     * @param int $quantity  $quantity A calculated field with the result 'rawQuantity' + 'offer'
-     *
      * @return self
      */
-    public function setQuantity(int $quantity)
+    public function setQuantity()
     {
-        $this->quantity = $quantity;
+        $this->quantity = $this->rawQuantity + $this->offer;
 
         return $this;
     }

@@ -208,6 +208,8 @@ class OrderPromotion
 
     /**
      * Get the value of freebieItem.
+     *
+     * @return Product
      */
     public function getFreebieItem()
     {

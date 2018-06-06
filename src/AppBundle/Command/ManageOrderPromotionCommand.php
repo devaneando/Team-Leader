@@ -332,7 +332,7 @@ class ManageOrderPromotionCommand extends GeneratorCommand
      */
     protected function createAction()
     {
-        if (!$input->getOption('create')) {
+        if (!$this->input->getOption('create')) {
             return false;
         }
         $questionHelper = $this->getQuestionHelper();
@@ -358,7 +358,7 @@ class ManageOrderPromotionCommand extends GeneratorCommand
             ->setMinimumAmount($minimumAmount)
             ->setEnabled(true);
 
-        if($discount){
+        if ($discount) {
             $orderPromotion->setDiscount($discount);
         } else {
             $orderPromotion->setFreebieItem($freebie)
@@ -378,7 +378,7 @@ class ManageOrderPromotionCommand extends GeneratorCommand
      */
     protected function editAction()
     {
-        throw new Exception('To be implemented.');
+        throw new \Exception('To be implemented.');
     }
 
     /**
@@ -390,7 +390,7 @@ class ManageOrderPromotionCommand extends GeneratorCommand
      */
     protected function enableAction()
     {
-        throw new Exception('To be implemented.');
+        throw new \Exception('To be implemented.');
     }
 
     /**
@@ -402,6 +402,6 @@ class ManageOrderPromotionCommand extends GeneratorCommand
      */
     protected function disableAction()
     {
-        throw new Exception('To be implemented.');
+        throw new \Exception('To be implemented.');
     }
 }

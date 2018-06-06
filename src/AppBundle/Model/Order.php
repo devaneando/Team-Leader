@@ -11,6 +11,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Order
 {
+    const UNEXISTENT_VERY_BIG_NUMBER = 999999999999;
+
     /**
      * @var string $productId The orderId
      */
@@ -175,6 +177,7 @@ class Order
             $rawTotal += $item->getTotal();
         }
         $this->rawTotal = $rawTotal;
+
         $this->updateTotals();
 
         return $this;
@@ -222,7 +225,10 @@ class Order
      */
     public function setTotal()
     {
-        $this->total = $this->rawTotal * (($this->discount / 100) + 1);
+        $this->total = $this->rawTotal;
+        if ($this->discount > 0) {
+            $this->total = $this->rawTotal * (1 - ($this->discount / 100));
+        }
 
         return $this;
     }
@@ -237,5 +243,24 @@ class Order
         $this->setTotal();
 
         return $this;
+    }
+
+    /**
+     * Returns the cheapest item in the order.
+     *
+     * @return OrderItem
+     */
+    public function getCheapestItem()
+    {
+        $cheapest = ['object' => null, 'price' => self::UNEXISTENT_VERY_BIG_NUMBER];
+        foreach ($this->getItems() as $item) {
+            /** @var OrderItem $item */
+            if ($item->getPrice() < $cheapest['price']) {
+                $cheapest['price'] = $item->getPrice();
+                $cheapest['object'] = $item;
+            }
+        }
+
+        return $cheapest['object'];
     }
 }

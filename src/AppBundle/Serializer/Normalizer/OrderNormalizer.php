@@ -76,9 +76,6 @@ class OrderNormalizer implements NormalizerInterface, DenormalizerInterface
         if (isset($data['customer-id'])) {
             $order->setCustomerId($data['customer-id']);
         }
-        if (isset($data['total'])) {
-            $order->setCustomerId($data['total']);
-        }
 
         foreach ($data['items'] as $dataItem) {
             $item = new OrderItem();
@@ -92,6 +89,10 @@ class OrderNormalizer implements NormalizerInterface, DenormalizerInterface
                 $item->setPrice($dataItem['unit-price']);
             }
             $order->addItem($item);
+        }
+
+        if (isset($data['total'])) {
+            $order->setRawTotal($data['total']);
         }
 
         return $order;

@@ -29,15 +29,15 @@ class LoadFixtures extends Fixture
             ->setName('Puny Hero');
 
         $products = [
-            'Magical Hammer',
-            'Giant Screw',
-            'The "If"',
-            'The "Else"',
-            'Deadpool',
-            'Hulk',
-            'Iron Man',
-            'Spider-Man',
-            'Thor',
+            ['name' => 'magicalHammer', 'value' => 'Magical Hammer'],
+            ['name' => 'giantScrew', 'value' => 'Giant Screw'],
+            ['name' => 'theIf', 'value' => 'The "If"'],
+            ['name' => 'theElse', 'value' => 'The "Else"'],
+            ['name' => 'deadpool', 'value' => 'Deadpool'],
+            ['name' => 'hulk', 'value' => 'Hulk'],
+            ['name' => 'ironMan', 'value' => 'Iron Man'],
+            ['name' => 'spiderMan', 'value' => 'Spider-Man'],
+            ['name' => 'thor', 'value' => 'Thor'],
         ];
 
         for ($i=1; $i <= count($products); ++$i) {
@@ -52,13 +52,15 @@ class LoadFixtures extends Fixture
                 $prefix = 'TO';
             }
 
-            $product = new Product();
-            $product
+            $name = $products[$i-1]['name'];
+            $value = $products[$i-1]['value'];
+            $$name = new Product();
+            $$name
                 ->setCode(sprintf('%s%03s', $prefix, $i))
                 ->setEnabled(true)
-                ->setName($products[$i-1]);
-            $product->addCategory($category);
-            $manager->persist($product);
+                ->setName($value);
+            $$name->addCategory($category);
+            $manager->persist($$name);
         }
 
         // A customer who has already bought for over € 1000, gets a discount of 10% on the whole order.
@@ -72,6 +74,16 @@ class LoadFixtures extends Fixture
             ->setDiscount(10)
             ->setEnabled(true)
             ->setMinimumAmount(1000);
+        $manager->persist($orderPromotion);
+
+        $orderPromotion = new OrderPromotion();
+        $orderPromotion
+            ->setCode('BBB001')
+            ->setDescription('Buy 100€ get a free Spider-Man')
+            ->setFreebieItem($spiderMan)
+            ->setFreebieQuantity(1)
+            ->setEnabled(true)
+            ->setMinimumAmount(100);
         $manager->persist($orderPromotion);
 
         $manager->flush();

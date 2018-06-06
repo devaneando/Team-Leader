@@ -10,6 +10,7 @@ parameters:
     app.repository.product.class: AppBundle\Entity\Repository\ProductRepository
     app.service.order_service.class: AppBundle\Service\OrderService
     app.service.managers_command.class: AppBundle\Service\ManagersCommandService
+    app.processor.order_promotion.class: AppBundle\Processor\OrderPromotion
 
 services:
     _defaults:
@@ -100,3 +101,12 @@ services:
         public: true
         tags:
             - { name: 'doctrine.fixture.orm' }
+
+    ##### Processors
+
+    app.processor.order_promotion:
+        class: '%app.processor.order_promotion.class%'
+        public: true
+        calls:
+            - [setProductRepository, ['@app.repository.product']]
+            - [setOrderPromotionRepository, ['@app.repository.order_promotion']]
