@@ -181,6 +181,7 @@ class OrderItem
     public function setDiscount(float $discount)
     {
         $this->discount = $discount;
+
         $this->updateTotals();
 
         return $this;
@@ -204,6 +205,7 @@ class OrderItem
     public function setTotal()
     {
         $this->total = $this->rawTotal;
+
         if ($this->discount > 0) {
             $this->total = $this->rawTotal * (1 - ($this->discount / 100));
         }
