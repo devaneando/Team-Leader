@@ -69,7 +69,7 @@ class CategoryFreebiePromotion implements ProcessorInterface
      */
     protected function findBestOffer(OrderItem $item)
     {
-        $promotions = $this->getCategoryFreebiePromotionRepository()->findBestFreebie(
+        $promotions = $this->getCategoryFreebiePromotionRepository()->findBestFreebieItems(
                 $item->getCategoryIds(),
                 $item->getRawQuantity()
             );

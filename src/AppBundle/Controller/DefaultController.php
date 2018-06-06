@@ -30,6 +30,8 @@ class DefaultController extends FOSRestController
      * @Method({"POST"})
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
     public function processOrderAction(Request $request)
     {
@@ -52,8 +54,6 @@ class DefaultController extends FOSRestController
         $this->getCheapestDiscountPromotion()->process();
         $order = $this->getCheapestDiscountPromotion()->getOrder();
 
-        die(var_dump($this->getOrderService()->orderToJson($order)));
-        // // replace this example code with whatever you need
-        // return new JsonResponse([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        return new JsonResponse($this->getOrderService()->orderToJson($order), 200, [], true);
     }
 }

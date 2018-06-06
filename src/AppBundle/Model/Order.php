@@ -104,6 +104,7 @@ class Order
     public function getItems()
     {
         return $this->items;
+        $this->updateTotals();
     }
 
     /**
@@ -116,6 +117,7 @@ class Order
     public function setItems(ArrayCollection $items)
     {
         $this->items = $items;
+        $this->updateTotals();
 
         return $this;
     }
@@ -133,6 +135,7 @@ class Order
             return $this;
         }
         $this->items->add($item);
+        $this->updateTotals();
 
         return $this;
     }
@@ -150,6 +153,7 @@ class Order
             return $this;
         }
         $this->items->removeElement($item);
+        $this->updateTotals();
 
         return $this;
     }
@@ -177,8 +181,6 @@ class Order
             $rawTotal += $item->getTotal();
         }
         $this->rawTotal = $rawTotal;
-
-        $this->updateTotals();
 
         return $this;
     }
@@ -226,6 +228,7 @@ class Order
     public function setTotal()
     {
         $this->total = $this->rawTotal;
+
         if ($this->discount > 0) {
             $this->total = $this->rawTotal * (1 - ($this->discount / 100));
         }
@@ -240,6 +243,7 @@ class Order
      */
     public function updateTotals()
     {
+        $this->setRawTotal();
         $this->setTotal();
 
         return $this;

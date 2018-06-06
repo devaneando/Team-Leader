@@ -67,9 +67,14 @@ class OrderPromotion implements ProcessorInterface
                 $freebie->getFreebieItem()->getCode()
             );
 
+            $categories = [];
+            foreach ($product->getCategories() as $category) {
+                $categories[] = $category->getId();
+            }
+
             $orderItem = new OrderItem();
             $orderItem
-                ->setCategoryIds($product->getCategories()->toArray())
+                ->setCategoryIds($categories)
                 ->setPrice(0)
                 ->setProductId($product->getId())
                 ->setRawQuantity($freebie->getFreebieQuantity());
