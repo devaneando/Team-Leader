@@ -39,7 +39,7 @@ class OrderPromotion
     /**
      * @var float
      *
-     * @ORM\Column(name="minimumAmount", type="float")
+     * @ORM\Column(name="minimum_amount", type="float")
      */
     private $minimumAmount;
 
@@ -53,12 +53,18 @@ class OrderPromotion
     /**
      * @var int
      *
-     * @ORM\Column(name="freebieQuantity", type="integer")
+     * @ORM\Column(name="freebie_quantity", type="integer")
      */
     private $freebieQuantity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="promotions", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="promotions", cascade={"persist"})
+     */
+
+    /**
+     * @var Product
+     *
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="promotions")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     private $freebieItem;

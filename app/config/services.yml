@@ -11,6 +11,7 @@ parameters:
     app.service.order_service.class: AppBundle\Service\OrderService
     app.service.managers_command.class: AppBundle\Service\ManagersCommandService
     app.processor.order_promotion.class: AppBundle\Processor\OrderPromotion
+    app.repository.category_freebie_promotion.class: AppBundle\Entity\Repository\CategoryFreebiePromotionRepository
 
 services:
     _defaults:
@@ -42,6 +43,14 @@ services:
         public: true
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments: [ AppBundle\Entity\OrderPromotion ]
+        tags:
+            - { name: 'doctrine.repository_service' }
+
+    app.repository.category_freebie_promotion:
+        class: '%app.repository.category_freebie_promotion.class%'
+        public: true
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments: [ AppBundle\Entity\CategoryFreebiePromotion ]
         tags:
             - { name: 'doctrine.repository_service' }
 

@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\CategoryFreebiePromotion;
 use AppBundle\Entity\OrderPromotion;
 use AppBundle\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -85,6 +86,15 @@ class LoadFixtures extends Fixture
             ->setEnabled(true)
             ->setMinimumAmount(100);
         $manager->persist($orderPromotion);
+
+        $categoryFreebiePromotion = new CategoryFreebiePromotion();
+        $categoryFreebiePromotion
+            ->setCategory($switches)
+            ->setCode('ZZZ001')
+            ->setDescription('Buy 5 switches get a sixty for free.')
+            ->setEnabled(true)
+            ->setMinimumQuantity(5);
+        $manager->persist($categoryFreebiePromotion);
 
         $manager->flush();
     }

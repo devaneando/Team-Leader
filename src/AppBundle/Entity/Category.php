@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\CategoryFreebiePromotion;
 use AppBundle\Entity\Product;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -47,6 +48,13 @@ class Category
     private $products;
 
     /**
+     * @var arrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="CategoryFreebiePromotion", mappedBy="category")
+     */
+    private $categoryFreebiePromotions;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean")
@@ -56,6 +64,7 @@ class Category
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->categoryFreebiePromotions = new ArrayCollection();
     }
 
     /**
@@ -148,6 +157,64 @@ class Category
         }
         $this->products->removeElement($product);
         $product->removeCategory($this);
+
+        return $this;
+    }
+
+    /**
+     * Get the value of categoryFreebiePromotions.
+     *
+     * @return ArrayCollection
+     */
+    public function getCategoryFreebiePromotions()
+    {
+        return $this->categoryFreebiePromotions;
+    }
+
+    /**
+     * Set the value of categoryFreebiePromotions.
+     *
+     * @param ArrayCollection $categoryFreebiePromotions
+     *
+     * @return self
+     */
+    public function setCategoryFreebiePromotions(ArrayCollection $categoryFreebiePromotions)
+    {
+        $this->categoryFreebiePromotions = $categoryFreebiePromotions;
+
+        return $this;
+    }
+
+    /**
+     * Add a CategoryFreebiePromotion to the CategoryFreebiePromotions collection.
+     *
+     * @param CategoryFreebiePromotion $ategoryFreebiePromotion
+     *
+     * @return self
+     */
+    public function addCategoryFreebiePromotion(CategoryFreebiePromotion $ategoryFreebiePromotion)
+    {
+        if ($this->categoryFreebiePromotions->contains($ategoryFreebiePromotion)) {
+            return $this;
+        }
+        $this->categoryFreebiePromotions->add($ategoryFreebiePromotion);
+
+        return $this;
+    }
+
+    /**
+     * Remove a CategoryFreebiePromotion from the CategoryFreebiePromotions collection.
+     *
+     * @param CategoryFreebiePromotion $ategoryFreebiePromotion
+     *
+     * @return self
+     */
+    public function removeCategoryFreebiePromotion(CategoryFreebiePromotion $ategoryFreebiePromotion)
+    {
+        if (!$this->categoryFreebiePromotions->contains($ategoryFreebiePromotion)) {
+            return $this;
+        }
+        $this->categoryFreebiePromotions->removeElement($ategoryFreebiePromotion);
 
         return $this;
     }
