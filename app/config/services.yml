@@ -5,13 +5,14 @@ parameters:
     app.command.manage_order_promotion.class: AppBundle\Command\ManageOrderPromotionCommand
     app.command.manage_product.class: AppBundle\Command\ManageProductCommand
     app.fixture.load.class: AppBundle\DataFixtures\LoadFixtures
+    app.processor.category_freebie.class: AppBundle\Processor\CategoryFreebiePromotion
+    app.processor.order_promotion.class: AppBundle\Processor\OrderPromotion
+    app.repository.category_freebie_promotion.class: AppBundle\Entity\Repository\CategoryFreebiePromotionRepository
     app.repository.category.class: AppBundle\Entity\Repository\CategoryRepository
     app.repository.order_promotion.class: AppBundle\Entity\Repository\OrderPromotionRepository
     app.repository.product.class: AppBundle\Entity\Repository\ProductRepository
-    app.service.order_service.class: AppBundle\Service\OrderService
     app.service.managers_command.class: AppBundle\Service\ManagersCommandService
-    app.processor.order_promotion.class: AppBundle\Processor\OrderPromotion
-    app.repository.category_freebie_promotion.class: AppBundle\Entity\Repository\CategoryFreebiePromotionRepository
+    app.service.order_service.class: AppBundle\Service\OrderService
 
 services:
     _defaults:
@@ -119,3 +120,9 @@ services:
         calls:
             - [setProductRepository, ['@app.repository.product']]
             - [setOrderPromotionRepository, ['@app.repository.order_promotion']]
+
+    app.processor.category_freebie:
+        class: '%app.processor.category_freebie.class%'
+        public: true
+        calls:
+            - [setCategoryFreebiePromotionRepository, ['@app.repository.category_freebie_promotion']]

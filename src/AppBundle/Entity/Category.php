@@ -48,7 +48,7 @@ class Category
     private $products;
 
     /**
-     * @var arrayCollection
+     * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="CategoryFreebiePromotion", mappedBy="category")
      */

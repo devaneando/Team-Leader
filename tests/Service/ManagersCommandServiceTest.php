@@ -104,8 +104,6 @@ class ManagersCommandServiceTest extends WebTestCase
         /** @var ManagersCommandService $srvManagersCommand */
         $srvManagersCommand = $this->getContainer()->get('app.service.managers_command');
 
-        var_dump(implode('|', $srvManagersCommand->listOrderPromotions()));
-
         $this->assertEquals(
             '<comment>Id        |Enabled   |Code      |Min. Amount |Discount  |Freebie        |Description</comment>|'
             .'<info>1         |1         |AAA001    |1000        |10        |0              |Buy 1000€ get 10%</info>',

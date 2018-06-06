@@ -91,10 +91,6 @@ class OrderNormalizer implements NormalizerInterface, DenormalizerInterface
             $order->addItem($item);
         }
 
-        if (isset($data['total'])) {
-            $order->setRawTotal($data['total']);
-        }
-
         return $order;
     }
 }

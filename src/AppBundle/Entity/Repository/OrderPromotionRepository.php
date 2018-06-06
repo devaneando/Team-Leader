@@ -20,10 +20,6 @@ class OrderPromotionRepository extends EntityRepository
      */
     public function findBestDiscount(int $amount)
     {
-
-        // Caused by
-        // Doctrine\ORM\Query\QueryException: SELECT o FROM AppBundle\Entity\OrderPromotion o, OrderPromotion o WHERE minimumAmount <= :amount AND enabled = 1 AND discount > 0 ORDER BY o.discount DSC
-
         $query = $this->_em->createQueryBuilder();
         $query
             ->select('o')

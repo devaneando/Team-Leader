@@ -231,6 +231,7 @@ class OrderItem
     public function setOffer(int $offer)
     {
         $this->offer = $offer;
+        $this->updateTotals();
 
         return $this;
     }
@@ -314,6 +315,7 @@ class OrderItem
     {
         $this->setRawTotal();
         $this->setTotal();
+        $this->setQuantity();
 
         return $this;
     }
