@@ -103,7 +103,7 @@ class CheapestDiscountPromotion implements ProcessorInterface
      *
      * @param OrderItem $item
      *
-     * @return int
+     * @return float
      */
     public function getOffer(OrderItem &$item)
     {

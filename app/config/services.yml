@@ -4,6 +4,7 @@ parameters:
     app.command.manage_category.class: AppBundle\Command\ManageCategoryCommand
     app.command.manage_order_promotion.class: AppBundle\Command\ManageOrderPromotionCommand
     app.command.manage_product.class: AppBundle\Command\ManageProductCommand
+    app.controller.default.class: AppBundle\Controller\DefaultController
     app.fixture.load.class: AppBundle\DataFixtures\LoadFixtures
     app.processor.category_freebie.class: AppBundle\Processor\CategoryFreebiePromotion
     app.processor.cheapest_discount.class: AppBundle\Processor\CheapestDiscountPromotion
@@ -142,3 +143,14 @@ services:
         public: true
         calls:
             - [setCheapestDiscountPromotionRepository, ['@app.repository.cheapest_discount_promotion']]
+
+    ##### Controllers
+
+    app.controller.default:
+        class: '%app.controller.default.class%'
+        public: true
+        calls:
+            - [setOrderService, ['@app.service.order_service']]
+            - [setCategoryFreebiePromotion, ['@app.processor.category_freebie']]
+            - [setCheapestDiscountPromotion, ['@app.processor.cheapest_discount']]
+            - [setOrderPromotion, ['@app.processor.order_promotion']]
